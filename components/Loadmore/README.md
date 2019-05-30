@@ -73,7 +73,7 @@ export default {
         this.reachEnd = data.isLastPage
         return data.list
       } catch (err) {
-        // TODO: 处理请求错误
+        throw new Error('竟然失败了，快点我重试一下')
       }
     },
 
