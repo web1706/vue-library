@@ -111,21 +111,21 @@ export default {
 |------|-----|------|
 |`refreshMethod`|`function`|触发刷新时调用的函数，函数返回表示刷新完成，可返回`Promise`。函数如果返回一个字符串，则将其作为成功的提示信息。如果抛出一个异常，则表示刷新失败。可以抛出一个`Error`对象或者一个字符串，以自定义错误提示信息。如果不传，则禁用下拉刷新功能。|
 |`refreshDistance`|`number`|下拉多少像素时可触发下拉刷新|
+|`loadmoreMethod`|`function`|触发加载时调用的函数，函数返回表示加载完成，可返回`Promise`。函数如果抛出一个异常，则代表加载失败。可以抛出一个`Error`对象或者一个字符串，以自定义错误提示信息。如果不传，则禁用触底加载功能。|
+|`loadmoreDistance`|`number`|距离底部多少像素时触发加载|
+|`isEmpty`|`boolean`|当前是否没有数据，建议传入|
+|`reachEnd`|`boolean`|是否加载完所有数据，建议传入|
+|`initialLoad`|`boolean`|初始时是否调用一次加载更多函数|
 |`refreshPullText`|`string`|下拉刷新时的提示文字|
 |`refreshDropText`|`string`|释放可刷新时的提示文字|
 |`refreshLoadingText`|`string`|正在刷新时的提示文字|
 |`refreshSuccessText`|`string`|刷新成功时的默认提示信息|
 |`refreshErrorText`|`string`|刷新失败时的默认提示信息|
-|`loadmoreMethod`|`function`|触发加载时调用的函数，函数返回表示加载完成，可返回`Promise`。函数如果抛出一个异常，则代表加载失败。可以抛出一个`Error`对象或者一个字符串，以自定义错误提示信息。如果不传，则禁用触底加载功能。|
-|`loadmoreDistance`|`number`|距离底部多少像素时触发加载|
-|`isEmpty`|`boolean`|当前是否没有数据|
-|`reachEnd`|`boolean`|是否加载完所有数据|
 |`loadmoreReadyText`|`string`|正常情况下的提示文字|
 |`loadmoreLoadingText`|`string`|加载过程中的提示文字|
 |`loadmoreEmptyText`|`string`|无数据可加载时的提示文字|
 |`loadmoreEndText`|`string`|加载完所有数据时的提示文字|
 |`loadmoreErrorText`|`string`|加载失败时的默认提示信息|
-|`initialLoad`|`boolean`|初始时是否调用一次加载更多函数|
 
 ### methods
 
