@@ -96,7 +96,7 @@
  * @copyright web1706 2019
  * @author cxy930123 <chen@xingyu1993.cn>
  * @license MIT
- * @see {@link https://github.com/web1706/vue-library/blob/master/components/Loadmore/README.md}
+ * @see {@link https://github.com/web1706/vue-library/tree/master/components/Loadmore}
  */
 export default {
   props: {
