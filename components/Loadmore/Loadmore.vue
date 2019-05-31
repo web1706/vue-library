@@ -48,7 +48,9 @@
         </slot>
       </div>
     </div>
-    <slot/>
+    <div ref="list">
+      <slot/>
+    </div>
     <div
       class="loadmore"
       ref="loadmore"
@@ -587,9 +589,9 @@ export default {
     // 查找滚动元素
     this.findScrollElement();
     // 绑定下拉相关事件
-    this.$el.addEventListener('touchstart', this.onTouchStart, false);
-    this.$el.addEventListener('touchmove', this.onTouchMove, false);
-    this.$el.addEventListener('touchend', this.onTouchEnd, false);
+    this.$refs.list.addEventListener('touchstart', this.onTouchStart, false);
+    this.$refs.list.addEventListener('touchmove', this.onTouchMove, false);
+    this.$refs.list.addEventListener('touchend', this.onTouchEnd, false);
     // 初始加载
     if (this.initialLoad) {
       this.loadmore();
@@ -599,9 +601,9 @@ export default {
   destroyed() {
     // 释放内存
     this.scrollElement.removeEventListener('scroll', this.onScroll, false);
-    this.$el.removeEventListener('touchstart', this.onTouchStart, false);
-    this.$el.removeEventListener('touchmove', this.onTouchMove, false);
-    this.$el.removeEventListener('touchend', this.onTouchEnd, false);
+    this.$refs.list.removeEventListener('touchstart', this.onTouchStart, false);
+    this.$refs.list.removeEventListener('touchmove', this.onTouchMove, false);
+    this.$refs.list.removeEventListener('touchend', this.onTouchEnd, false);
   },
 
   activated() {
