@@ -598,7 +598,7 @@ export default {
     }
   },
 
-  destroyed() {
+  beforeDestroy() {
     // 释放内存
     this.scrollElement.removeEventListener('scroll', this.onScroll, false);
     this.$refs.list.removeEventListener('touchstart', this.onTouchStart, false);
