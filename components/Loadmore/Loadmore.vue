@@ -234,7 +234,7 @@ export default {
       /**
        * 刷新成功或失败，用定时器去除提示信息
        */
-      refreshTimer: null,
+      refreshTimer: 0,
       /**
        * 是否正在加载
        */
@@ -262,7 +262,11 @@ export default {
       /**
        * 是否在`<keep-alive>`组件中处于非激活状态（非激活状态下不处理相关事件）
        */
-      inactive: false
+      inactive: false,
+      /**
+       * 用于判断组件状态是否已被重置
+       */
+      resetId: 0
     };
   },
 
@@ -431,11 +435,13 @@ export default {
     async refresh() {
       if (typeof this.refreshMethod !== 'function') return;
       if (this.refreshStatus === 'loading') return;
+      const resetId = this.resetId;
       try {
         this.refreshError = '';
         this.loadmoreError = '';
         this.refreshStatus = 'loading';
         const message = await this.refreshMethod();
+        if (this.resetId !== resetId) return;
         if (typeof message === 'string') {
           this.refreshMessage = message;
         } else {
@@ -443,6 +449,7 @@ export default {
         }
         this.refreshStatus = 'success';
       } catch (err) {
+        if (this.resetId !== resetId) return;
         if (err instanceof Error) {
           err = err.message;
         }
@@ -460,12 +467,15 @@ export default {
     async loadmore() {
       if (typeof this.loadmoreMethod !== 'function') return;
       if (this.isLoading || this.reachEnd) return;
+      const resetId = this.resetId;
       try {
         this.refreshError = '';
         this.loadmoreError = '';
         this.isLoading = true;
         await this.loadmoreMethod();
+        if (this.resetId !== resetId) return;
       } catch (err) {
+        if (this.resetId !== resetId) return;
         if (err instanceof Error) {
           err = err.message;
         }
@@ -474,8 +484,24 @@ export default {
         }
         this.loadmoreError = err;
       } finally {
+        if (this.resetId !== resetId) return;
         this.isLoading = false;
       }
+    },
+
+    /**
+     * 重置组件状态
+     */
+    reset() {
+      this.refreshStatus = 'pull';
+      this.refreshMessage = '';
+      this.refreshError = '';
+      clearTimeout(this.refreshTimer);
+      this.refreshTimer = 0;
+      this.isLoading = false;
+      this.loadmoreError = '';
+      this.touchmoveDistance = 0;
+      this.resetId++;
     },
 
     /**
