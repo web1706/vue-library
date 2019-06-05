@@ -517,7 +517,9 @@ export default {
       const loadmoreDistance =
         typeof this.loadmoreDistance === 'number'
           ? this.loadmoreDistance
-          : this.$refs.loadmore.clientHeight;
+          : this.$refs.loadmore
+          ? this.$refs.loadmore.clientHeight
+          : 0;
       if (scrollTop + clientHeight + loadmoreDistance >= scrollHeight) {
         this.loadmore();
       }
