@@ -517,9 +517,7 @@ export default {
       const loadmoreDistance =
         typeof this.loadmoreDistance === 'number'
           ? this.loadmoreDistance
-          : this.$refs.loadmore
-          ? this.$refs.loadmore.clientHeight
-          : 0;
+          : this.$refs.loadmore.clientHeight;
       if (scrollTop + clientHeight + loadmoreDistance >= scrollHeight) {
         this.loadmore();
       }
@@ -615,7 +613,9 @@ export default {
 
   mounted() {
     // 查找滚动元素
-    this.findScrollElement();
+    this.$nextTick(() => {
+      this.findScrollElement();
+    });
     // 绑定下拉相关事件
     this.$refs.list.addEventListener('touchstart', this.onTouchStart, false);
     this.$refs.list.addEventListener('touchmove', this.onTouchMove, false);
