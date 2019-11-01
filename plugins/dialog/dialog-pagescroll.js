@@ -87,29 +87,27 @@ const getScrollBarWidth = () => {
  * @param {boolean} [options.disableScroll=true] 打开弹窗时是否默认禁用滚动
  */
 export default function (options = {}) {
-  const isUndef = (o) => typeof o === 'undefined'
+  const isDef = (o) => typeof o !== 'undefined'
 
-  function shouldDisableScroll(dialogOptions) {
-    const defaultValue = true
-    let disableScroll = dialogOptions.disableScroll
-    if (isUndef(disableScroll)) {
-      disableScroll = options ? options.disableScroll : defaultValue
+  function shouldDisableScroll(opts) {
+    if (isDef(opts.disableScroll)) {
+      return opts.disableScroll
     }
-    if (isUndef(disableScroll)) {
-      disableScroll = defaultValue
+    if (isDef(options.disableScroll)) {
+      return options.disableScroll
     }
-    return !!disableScroll
+    return true
   }
 
   return {
-    beforeOpen(vm, dialogOptions) {
-      if (shouldDisableScroll(dialogOptions)) {
+    beforeOpen(vm, opts) {
+      if (shouldDisableScroll(opts)) {
         lock()
       }
     },
 
-    closed(vm, dialogOptions) {
-      if (shouldDisableScroll(dialogOptions)) {
+    closed(vm, opts) {
+      if (shouldDisableScroll(opts)) {
         unlock()
       }
     }
