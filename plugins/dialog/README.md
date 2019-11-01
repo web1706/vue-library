@@ -108,3 +108,4 @@ export default {
 - `dialog-pagescroll`：弹窗打开时禁止页面滚动
 - `dialog-router`：控制路由跳转时弹窗的行为，或阻止本次路由跳转
 - `dialog-transparent`：阻止用户与弹窗组件进行交互
+- `dialog-mask`：为弹窗添加遮罩层
