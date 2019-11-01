@@ -12,8 +12,8 @@
  *       default: 'normal',
  *       // 默认遮罩层颜色（任意css color属性）
  *       color: 'rgba(0, 0, 0, 0.5)',
- *       // 默认遮罩层定位方式（任意css position属性值）
- *       position: 'fixed',
+ *       // 自定义遮罩层样式
+ *       style: {},
  *       // 点击遮罩层时是否关闭弹窗
  *       closeOnClick: true
  *     })
@@ -26,6 +26,11 @@
  *   mask: 'none',
  *   // 遮罩层颜色
  *   maskColor: 'rgba(0, 0, 0, 0.5)',
+ *   // 自定义遮罩层样式
+ *   maskStyle: {
+ *     left: '10%',
+ *     right: '10%'
+ *   },
  *   // 点击遮罩层时是否关闭弹窗
  *   closeOnClickMask: false,
  *   // 点击遮罩层关闭弹窗时的回调
@@ -94,7 +99,12 @@ export default function (options = {}) {
         alignItems: 'center',
         backgroundColor: getBackgroundColor(opts)
       }
-      Object.assign(wrapper.style, wrapperStyle)
+      Object.assign(
+        wrapper.style,
+        wrapperStyle,
+        options.style,
+        opts.maskStyle
+      )
 
       vm.$el.replaceWith(wrapper)
       wrapper.append(vm.$el)
