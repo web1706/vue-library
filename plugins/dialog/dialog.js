@@ -1,6 +1,11 @@
 /**
+ * @copyright web1706 2019
+ * @author cxy930123 <chen@xingyu1993.cn>
+ * @license MIT
+ * @see {@link https://github.com/web1706/vue-library/tree/master/plugins/dialog}
+ *
  * @example
- * 
+ *
  * // main.js
  * import Vue from 'vue'
  * import DialogPlugin from 'dialog.js'
@@ -17,19 +22,19 @@
  *   // 插件列表
  *   plugins: []
  * })
- * 
+ *
  * // App.vue
  * import Alert from '@/components/Alert.vue';
  * const { close } = this.$dialog(<Alert
  *   message="Success"
  *   onConfirm={() => close()}
  * />)
- * 
+ *
  * // 插件定义
  * export default {
  *   // 初始化函数，在安装插件时调用
  *   init(Vue) {},
- * 
+ *
  *   // 生命周期函数
  *   // `vm`参数为弹窗组件实例
  *   // `options`参数为调用`this.$dialog`时传入的第二个参数
