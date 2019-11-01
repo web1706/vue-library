@@ -24,8 +24,6 @@
  * const { close } = this.$dialog(<Component />, {
  *   // 遮罩类型
  *   mask: 'none',
- *   // 遮罩层定位方式
- *   maskPosition: 'fixed',
  *   // 遮罩层颜色
  *   maskColor: 'rgba(0, 0, 0, 0.5)',
  *   // 点击遮罩层时是否关闭弹窗
@@ -46,16 +44,6 @@ export default function (options = {}) {
       return options.default !== 'none'
     }
     return true
-  }
-
-  function getPosition(opts) {
-    if (isDef(opts.maskPosition)) {
-      return opts.maskPosition
-    }
-    if (isDef(options.position)) {
-      return options.position
-    }
-    return 'fixed'
   }
 
   function isTransparent(opts) {
@@ -96,7 +84,7 @@ export default function (options = {}) {
       if (!hasMask(opts)) return
       const wrapper = document.createElement('div')
       const wrapperStyle = {
-        position: getPosition(opts),
+        position: 'fixed',
         top: '0',
         right: '0',
         bottom: '0',
