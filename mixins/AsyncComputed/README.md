@@ -44,17 +44,7 @@ export default {
 
 ## 快捷取消 axios 请求
 
-使用 `axios-cancel-token` 插件，可以提供快捷取消 axios 请求的方法。
-
-```js
-// main.js
-import AsyncComputedMixin from '@/mixins/AsyncComputed/async-computed.mixin';
-import AxiosCancelTokenProp from '@/mixins/AsyncComputed/axios-cancel-token.prop';
-
-AsyncComputedMixin.useProp(AxiosCancelTokenProp);
-```
-
-接着可以从 `onCancel` 上取得快捷属性 `cancelToken`。
+从 `onCancel` 上取得快捷属性 `cancelToken`，用于自动取消过时的 axios 请求。
 
 ```js
 export default {
@@ -73,19 +63,14 @@ export default {
 };
 ```
 
-你也可以通过第二个参数指定快捷属性的名字。
-
-```js
-AsyncComputedMixin.useProp(AxiosCancelTokenProp, 'axiosCancelToken');
-```
-
 ## 自定义快捷属性
 
-如果你不使用 axios，或者想提供其他的快捷属性以便自动取消加载，可以自己编写快捷属性插件。
+如果你不使用 axios，或者想提供其他的快捷属性以便自动取消加载，可以自己编写快捷属性。
 
-快捷属性插件是一个函数，传入 `onCancel` 作为参数，返回快捷属性的值。
+快捷属性是一个函数，传入 `onCancel` 作为参数，返回快捷属性的值。具体写法可以参考预置的快捷属性 [axios-cancel-token.prop.js](https://github.com/web1706/vue-library/blob/master/mixins/AsyncComputed/axios-cancel-token.prop.js)。
 
 ```js
+// axios-cancel-token.prop.js
 export default function AxiosCancelTokenPlugin(onCancel) {
   const CancelToken = axios.CancelToken;
   const source = CancelToken.source();
@@ -94,8 +79,12 @@ export default function AxiosCancelTokenPlugin(onCancel) {
 }
 ```
 
-通过 `propName` 指定推荐的快捷属性名，当引入快捷属性插件时，如果没有指定属性名，则使用推荐的属性名。
+然后在 [async-computed.mixin.js](https://github.com/web1706/vue-library/blob/master/mixins/AsyncComputed/async-computed.mixin.js)中的 `fastProps` 中引入。
 
 ```js
-AxiosCancelTokenPlugin.propName = 'cancelToken';
+// async-computed.mixin.js
+import AxiosCancelTokenProp from './axios-cancel-token.prop'
+const fastProps = {
+  cancelToken: AxiosCancelTokenProp
+}
 ```

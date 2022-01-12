@@ -1,9 +1,16 @@
+import AxiosCancelTokenProp from './axios-cancel-token.prop'
+
+// 保存引入的快捷属性
+const fastProps = {
+  cancelToken: AxiosCancelTokenProp
+}
+
 /**
  * 异步计算属性，用法同依赖 vue-async-computed，但支持取消
  * @param {AsyncComputedObject} asyncComputed 异步计算属性
  *
- * @example 快捷取消 axios 请求（需要引入 AxiosCancelTokenPlugin）
- * asyncComputedMixin({
+ * @example 快捷取消 axios 请求（需要引入 AxiosCancelTokenProp）
+ * asyncComputed({
  *   async someProp({ cancelToken }) {
  *     return this.$ajax({
  *       url: '...',
@@ -13,7 +20,7 @@
  * })
  *
  * @example 手动取消回调
- * asyncComputedMixin({
+ * asyncComputed({
  *   async someProp(onCancel) {
  *     const CancelToken = axios.CancelToken;
  *     const source = CancelToken.source();
@@ -37,8 +44,7 @@
  * @type {(cb: () => U) => Promise<U>}
  *
  * @typedef CancelModules
- * @type {object}
- * @prop {import('axios').CancelToken} cancelToken 用于取消axios请求的token
+ * @type {{ [K in keyof props]: ReturnType<props[K]> }}
  *
  * @typedef IAsyncComputedValue
  * @type {{
@@ -49,7 +55,7 @@
  *   lazy?: boolean;
  * }}
  */
-export default function asyncComputedMixin(asyncComputed) {
+export default function asyncComputed(asyncComputed) {
   asyncComputed = { ...asyncComputed }
   // 保存所有的 vm2fns 实例，供组件销毁时使用
   const mapList = []
@@ -82,19 +88,6 @@ export default function asyncComputedMixin(asyncComputed) {
     }
   }
 }
-// 保存引入的插件
-const props = {}
-
-/**
- * 添加快捷属性
- * @param {() => any} propPlugin 插件函数，一个返回属性值的函数
- * @param {string} [propName] 要添加的属性名
- */
-asyncComputedMixin.useProp = function(propPlugin, propName = propPlugin.propName) {
-  // 把插件保存起来
-  props[propName] = propPlugin
-  return asyncComputedMixin
-}
 
 /**
  * 给函数增加取消的方法，在多次执行时取消前面的函数
@@ -117,10 +110,10 @@ function autoCancel(fn, vm2fns) {
       cancelFn = resolve
     })
     const onCancel = (cb) => cancelPromise.then(cb)
-    // 定义已经引入的插件属性
-    for (const propName of Object.keys(props)) {
+    // 定义已经引入的快捷属性
+    for (const propName of Object.keys(fastProps)) {
       Object.defineProperty(onCancel, propName, {
-        get: props[propName].bind(null, onCancel)
+        get: fastProps[propName].bind(null, onCancel)
       })
     }
     try {
