@@ -44,7 +44,7 @@ const fastProps = {
  * @type {(cb: () => U) => Promise<U>}
  *
  * @typedef CancelModules
- * @type {{ [K in keyof props]: ReturnType<props[K]> }}
+ * @type {{ [K in keyof fastProps]: ReturnType<fastProps[K]> }}
  *
  * @typedef IAsyncComputedValue
  * @type {{
