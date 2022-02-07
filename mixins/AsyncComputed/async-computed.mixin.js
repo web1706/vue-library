@@ -7,6 +7,7 @@ const fastProps = {
 
 /**
  * 异步计算属性，用法同依赖 vue-async-computed，但支持取消
+ * @see {@link https://github.com/web1706/vue-library/tree/master/mixins/AsyncComputed}
  * @param {AsyncComputedObject} asyncComputed 异步计算属性
  *
  * @example 快捷取消 axios 请求（需要引入 AxiosCancelTokenProp）
