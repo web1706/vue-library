@@ -86,10 +86,12 @@
             immediate: true,
           }
         );
-      },
-      destroyed() {
         // 组件销毁时清除定时器
-        this[getterKey] = 0;
+        this.$on('hook:destroyed', () => {
+          if (timer !== null) {
+            clearTimeout(timer)
+          }
+        })
       },
     };
     if (typeof setterKey === "string") {
